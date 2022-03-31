@@ -32,7 +32,7 @@
                 BackgroundMusic = new sound("./sounds/Believe.mp3");
                 BackgroundMusic.play();
                 GameArea.start(480,330,20);
-                Background = new object(656, 450, "./images/background.jpg", 0, 0, "background");
+                Background = new object(656, 450, "./images/background.JPG", 0, 0, "background");
                 LobbyText = new object("50px", "Consolas", "black", 20, 50, "text");
                 LobbyImg = new object(400, 210, "./images/Flappy_Butterfly.png", 35, 60, "image");
                 LobbyText2 = new object("40px", "Consolas", "black", 30, 50, "text");
@@ -42,8 +42,11 @@
                 Player = new object(30, 30, "./images/butterfly1.png" , 40, 120, "image");
                 Player.gravity = 0.05;
                 Player.gravitySpeed = 0;
+                // Player.angle = 30;
                 UpBtn = new object(30, 30, "./images/upbutton.png", 50, 220, "image");
                 DownBtn = new object(30, 30, "./images/downbutton.png", 50, 280, "image");
+                // LeftBtn = new object(30, 30, "./images/leftbutton.png", 20, 200, "image");
+                // RightBtn = new object(30, 30, "./images/rightbutton.png", 80, 200, "image");
                 GameArea.timer = 0;
                 Enemy = [];
                 Score = new object("30px", "Consolas", "black", 280, 40, "text");
@@ -114,25 +117,40 @@
 
                     //玩家
                     //操控事件
-                    if (GameArea.key_is_pressed && GameArea.key_is_pressed[38]) {move(Player,'up',2);}
+                    // if (GameArea.key_is_pressed && GameArea.key_is_pressed[37]) {move(Player,'left',1);Player.image.src="./images/butterfly1_2.png";}
+                    // if (GameArea.key_is_pressed && GameArea.key_is_pressed[39]) {move(Player,'right',1);Player.image.src="./images/butterfly1.png";}
+                    if (GameArea.key_is_pressed && GameArea.key_is_pressed[38]) {move(Player,'up',2);/*rotation(Player,-1)*/}
                     if (GameArea.key_is_pressed && GameArea.key_is_pressed[40]) {move(Player,'down',2);}
-                    if (GameArea.key_is_pressed && GameArea.key_is_pressed[87]) {move(Player,'up',2);}
+                    // if (GameArea.key_is_pressed && GameArea.key_is_pressed[65]) {move(Player,'left',1);Player.image.src="./images/butterfly1_2.png";}
+                    // if (GameArea.key_is_pressed && GameArea.key_is_pressed[68]) {move(Player,'right',1);Player.image.src="./images/butterfly1.png";}
+                    if (GameArea.key_is_pressed && GameArea.key_is_pressed[87]) {move(Player,'up',2);/*rotation(Player,-1)*/}
                     if (GameArea.key_is_pressed && GameArea.key_is_pressed[83]) {move(Player,'down',2);}
                     if (GameArea.x && GameArea.y) 
                     {
                         if (UpBtn.clicked()) 
                         {
                             move(Player,'up',2);
+                            // rotation(Player,-1);
                         }
                         if (DownBtn.clicked()) 
                         {
                             move(Player,'down',2);
                         }
+                        // if (LeftBtn.clicked()) {
+                        //     move(Player,'left',1);
+                        //     Player.image.src="./images/butterfly1_2.png";
+                        // }
+                        // if (RightBtn.clicked()) {
+                        //     move(Player,'right',1);
+                        //     Player.image.src="./images/butterfly1.png";
+                        // }
                     } 
                     Player.newPosition();
                     Player.newShow();
                     UpBtn.newShow();
                     DownBtn.newShow();
+                    // LeftBtn.newShow();
+                    // RightBtn.newShow();
 
                     //敵人
                     //敵人產生器
@@ -438,7 +456,20 @@
                     EndSound.play();
                     GameArea.stop();
                     document.getElementById("restart").style.display="";
+                    // Player.bounce = 0.6;
+                    // Player.gravitySpeed = -(Player.gravitySpeed * Player.bounce);
                 }
+                // if (Player.angle > 31)
+                // {
+                //     rotation(Player,0);
+                //     Player.angle = 31;
+                // }else if(Player.angle < 30)
+                // {
+                //     Player.angle = 30;
+                // }else
+                // {
+                //     rotation(Player,0.5);
+                // }
             }
             function addscore()
             {
