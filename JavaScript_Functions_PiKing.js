@@ -43,12 +43,8 @@ var GameArea =
         || navigator.userAgent.match(/Windows Phone/i)
         ) 
         {
-            // window.addEventListener('touchstart', function (e) 
-            // {
-            //     GameArea.x = e.pageX;
-            //     GameArea.y = e.pageY;
-            // })
-            window.addEventListener('click', function (e) {
+            window.addEventListener('touchstart', function (e) 
+            {
                 GameArea.x = e.pageX;
                 GameArea.y = e.pageY;
             })
@@ -56,6 +52,10 @@ var GameArea =
             {
                 GameArea.x = false;
                 GameArea.y = false;
+            })
+            window.addEventListener('click', function (e) {
+                GameArea.x = e.pageX;
+                GameArea.y = e.pageY;
             })
         }
         else
