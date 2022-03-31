@@ -102,7 +102,7 @@ function object (width, height, color, x, y, type)
             ctx.font = this.width + " " + this.height;
             ctx.fillStyle = color;
             ctx.fillText(this.text, this.x, this.y);
-        } else if (type == "image")
+        } else if (type == "image" || type == "background")
         {
             if (this.angle==null)
             {
@@ -115,12 +115,12 @@ function object (width, height, color, x, y, type)
                 ctx.drawImage(this.image, this.width / -2, this.height / -2, this.width, this.height);
                 ctx.restore();
             }
+            if (type == "background") 
+            {   
+                ctx.drawImage(this.image, this.x + this.width, this.y, this.width, this.height);
+            }
         }
-        else if (type == "background") 
-        {   
-            ctx.drawImage(this.image,this.x,this.y,this.width, this.height);
-            ctx.drawImage(this.image, this.x + this.width, this.y, this.width, this.height);
-        } else
+        else
         {
             if (this.angle==null)
             {
