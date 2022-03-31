@@ -7,11 +7,12 @@
 		<meta name="author" content="Andy Chang">
 		<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
         <link rel="stylesheet" href="./CSS_PiKing.css">
+        <audio src="./sounds/Believe.mp3" preload="auto" autoplay loop></audio>
     </head>
     <script src="./JavaScript_Functions_PiKing.js"></script>
     <body onload="startGame()">
-        <button id = "next" onclick="next()" style="font-size:20px; font-family:Consolas; position: fixed; top:31%; left:200px;">Next</button>
-        <button id = "restart" onclick="refresh()" style="font-size:20px; font-family:Consolas; position: fixed; top:15%; left:180px; display: none;">Restart</button>
+        <button id = "next" onclick="next()" style="font-size:20px; font-family:Consolas; position: fixed; top:243px; left:280px;">Next</button>
+        <button id = "restart" onclick="refresh()" style="font-size:20px; font-family:Consolas; position: fixed; top:243px; left:280px; display: none;">Restart</button>
         <script>        
             var level = 0;
             function next() 
@@ -29,27 +30,25 @@
             function startGame()
             {
                 EndSound = new sound("./sounds/end.wav");
-                BackgroundMusic = new sound("./sounds/Believe.mp3");
-                BackgroundMusic.play();
-                GameArea.start(600,300,20);
-                Background = new object(656, 450, "./images/background.png", 0, 0, "background");
-                LobbyText = new object("50px", "Consolas", "black", 20, 50, "text");
-                LobbyImg = new object(400, 210, "./images/Flappy_Butterfly.png", 35, 60, "image");
-                LobbyText2 = new object("40px", "Consolas", "black", 30, 50, "text");
-                LobbyPlayer1 = new object(60, 60, "./images/butterfly1.png", 70, 120, "image");
-                LobbyPlayer2 = new object(60, 60, "./images/butterfly2.png", 210, 120, "image");
-                LobbyPlayer3 = new object(60, 60, "./images/butterfly3.png", 350, 120, "image");
+                GameArea.start(660,280,20);
+                Background = new object(700, 450, "./images/background.png", 0, 0, "background");
+                LobbyText = new object("50px", "Consolas", "black", 100, 50, "text");
+                LobbyImg = new object(400, 210, "./images/Flappy_Butterfly.png", 120, 60, "image");
+                LobbyText2 = new object("40px", "Consolas", "black", 100, 50, "text");
+                LobbyPlayer1 = new object(60, 60, "./images/butterfly1.png", 130, 120, "image");
+                LobbyPlayer2 = new object(60, 60, "./images/butterfly2.png", 270, 120, "image");
+                LobbyPlayer3 = new object(60, 60, "./images/butterfly3.png", 410, 120, "image");
                 Player = new object(30, 30, "./images/butterfly1.png" , 40, 120, "image");
                 Player.gravity = 0.05;
                 Player.gravitySpeed = 0;
                 // Player.angle = 30;
-                UpBtn = new object(30, 30, "./images/upbutton.png", 50, 220, "image");
-                DownBtn = new object(30, 30, "./images/downbutton.png", 50, 280, "image");
+                UpBtn = new object(30, 30, "./images/upbutton.png", 50, 170, "image");
+                DownBtn = new object(30, 30, "./images/downbutton.png", 50, 230, "image");
                 // LeftBtn = new object(30, 30, "./images/leftbutton.png", 20, 200, "image");
                 // RightBtn = new object(30, 30, "./images/rightbutton.png", 80, 200, "image");
                 GameArea.timer = 0;
                 Enemy = [];
-                Score = new object("30px", "Consolas", "black", 280, 40, "text");
+                Score = new object("30px", "Consolas", "black", 270, 40, "text");
                 GameArea.nowscore = 0;
             }
             //遊戲不斷執行
