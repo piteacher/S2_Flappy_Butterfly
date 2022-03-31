@@ -10,8 +10,8 @@
     </head>
     <script src="./JavaScript_Functions_PiKing.js"></script>
     <body onload="startGame()">
-        <button id = "next" onclick="next()" style="font-size:30px; font-family:Consolas; position: fixed; top:285px; left:200px;">Next</button>
-        <button id = "restart" onclick="refresh()" style="font-size:30px; font-family:Consolas; position: fixed; top:130px; left:180px; display: none;">Restart</button>
+        <button id = "next" onclick="next()" style="font-size:20px; font-family:Consolas; position: fixed; top:31%; left:200px;">Next</button>
+        <button id = "restart" onclick="refresh()" style="font-size:20px; font-family:Consolas; position: fixed; top:15%; left:180px; display: none;">Restart</button>
         <script>        
             var level = 0;
             function next() 
@@ -31,7 +31,7 @@
                 EndSound = new sound("./sounds/end.wav");
                 BackgroundMusic = new sound("./sounds/Believe.mp3");
                 BackgroundMusic.play();
-                GameArea.start(480,330,20);
+                GameArea.start(600,300,20);
                 Background = new object(656, 450, "./images/background.png", 0, 0, "background");
                 LobbyText = new object("50px", "Consolas", "black", 20, 50, "text");
                 LobbyImg = new object(400, 210, "./images/Flappy_Butterfly.png", 35, 60, "image");
