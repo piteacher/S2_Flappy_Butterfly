@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<title id="titlename">飛蝶大作戰</title>
+		<link id="icondemo" rel="icon" href="./images/butterfly.png">
+		<meta charset="utf-8">
+		<meta name="author" content="Andy Chang">
+		<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+        <link rel="stylesheet" href="./CSS_PiKing.css">
+    </head>
+    <script src="./JavaScript_Functions_PiKing.js"></script>
+    <body onload="startGame()">
+        <button id = "next" onclick="next()" style="font-size:30px; font-family:Consolas; position: fixed; top:285px; left:200px;">Next</button>
+        <button id = "restart" onclick="refresh()" style="font-size:30px; font-family:Consolas; position: fixed; top:130px; left:180px; display: none;">Restart</button>
+        <script>        
+            var level = 0;
+            function next() 
+            {
+                if (level == 0)
+                {
+                    level = 1;
+                    document.getElementById("next").style.display="none";
+                }else if (level == 1)
+                {
+                    level = 2;
+                }
+            }
+            //遊戲開始
+            function startGame()
+            {
+                EndSound = new sound("./sounds/end.wav");
+                BackgroundMusic = new sound("./sounds/Believe.mp3");
+                BackgroundMusic.play();
+                GameArea.start(480,330,20);
+                Background = new object(656, 450, "./images/background.jpg", 0, 0, "background");
+                LobbyText = new object("50px", "Consolas", "black", 20, 50, "text");
+                LobbyImg = new object(400, 210, "./images/Flappy_Butterfly.png", 35, 60, "image");
+                LobbyText2 = new object("40px", "Consolas", "black", 30, 50, "text");
+                LobbyPlayer1 = new object(60, 60, "./images/butterfly1.png", 70, 120, "image");
+                LobbyPlayer2 = new object(60, 60, "./images/butterfly2.png", 210, 120, "image");
+                LobbyPlayer3 = new object(60, 60, "./images/butterfly3.png", 350, 120, "image");
+                Player = new object(30, 30, "./images/butterfly1.png" , 40, 120, "image");
+                Player.gravity = 0.05;
+                Player.gravitySpeed = 0;
+                // Player.angle = 30;
+                UpBtn = new object(30, 30, "./images/upbutton.png", 50, 220, "image");
+                DownBtn = new object(30, 30, "./images/downbutton.png", 50, 280, "image");
+                // LeftBtn = new object(30, 30, "./images/leftbutton.png", 20, 200, "image");
+                // RightBtn = new object(30, 30, "./images/rightbutton.png", 80, 200, "image");
+                GameArea.timer = 0;
+                Enemy = [];
+                Score = new object("30px", "Consolas", "black", 280, 40, "text");
+                GameArea.nowscore = 0;
+            }
+            //遊戲不斷執行
+            function LoopGame() 
+            {
+                if (level==0)
+                {
+                    GameArea.clear();
+                    Background.speedX = -0.5;
+                    Background.newPosition();
+                    Background.newShow();
+                    LobbyText.text = "Flappy Butterfly";
+                    LobbyText.newShow();
+                    LobbyImg.newShow();
+                    
+                }else if (level==1)
+                {
+                    GameArea.clear();
+                    Background.speedX = -0.5;
+                    Background.newPosition();
+                    Background.newShow();
+                    LobbyText2.text = "Choose one to Start";
+                    LobbyText2.newShow();
+                    LobbyPlayer1.newShow();
+                    LobbyPlayer2.newShow();
+                    LobbyPlayer3.newShow();
+                    if (GameArea.x && GameArea.y) 
+                    {
+                        if (LobbyPlayer1.clicked()) 
+                        {
+                            Player.image.src = "./images/butterfly1.png";
+                            next();
+                        }
+                        else if (LobbyPlayer2.clicked()) 
+                        {
+                            Player.image.src = "./images/butterfly2.png";
+                            next();
+                        }
+                        else if (LobbyPlayer3.clicked()) 
+                        {
+                            Player.image.src= "./images/butterfly3.png";
+                            next();
+                        }
+                    }
+                    
+                }else if (level==2)
+                {
+                    //碰撞事件
+                    for (i = 0; i < Enemy.length; i += 1) 
+                    {
+                        if (Player.collision(Enemy[i])) 
+                        {
+                            EndSound.play();
+                            GameArea.stop();
+                            document.getElementById("restart").style.display="";
+                            return;
+                        } 
+                    }
+                    //畫布清除
+                    GameArea.clear();
+                    //背景
+                    Background.speedX = -0.5;
+                    Background.newPosition();
+                    Background.newShow();
+
+                    //玩家
+                    //操控事件
+                    // if (GameArea.key_is_pressed && GameArea.key_is_pressed[37]) {move(Player,'left',1);Player.image.src="./images/butterfly1_2.png";}
+                    // if (GameArea.key_is_pressed && GameArea.key_is_pressed[39]) {move(Player,'right',1);Player.image.src="./images/butterfly1.png";}
+                    if (GameArea.key_is_pressed && GameArea.key_is_pressed[38]) {move(Player,'up',2);/*rotation(Player,-1)*/}
+                    if (GameArea.key_is_pressed && GameArea.key_is_pressed[40]) {move(Player,'down',2);}
+                    // if (GameArea.key_is_pressed && GameArea.key_is_pressed[65]) {move(Player,'left',1);Player.image.src="./images/butterfly1_2.png";}
+                    // if (GameArea.key_is_pressed && GameArea.key_is_pressed[68]) {move(Player,'right',1);Player.image.src="./images/butterfly1.png";}
+                    if (GameArea.key_is_pressed && GameArea.key_is_pressed[87]) {move(Player,'up',2);/*rotation(Player,-1)*/}
+                    if (GameArea.key_is_pressed && GameArea.key_is_pressed[83]) {move(Player,'down',2);}
+                    if (GameArea.x && GameArea.y) 
+                    {
+                        if (UpBtn.clicked()) 
+                        {
+                            move(Player,'up',2);
+                            // rotation(Player,-1);
+                        }
+                        if (DownBtn.clicked()) 
+                        {
+                            move(Player,'down',2);
+                        }
+                        // if (LeftBtn.clicked()) {
+                        //     move(Player,'left',1);
+                        //     Player.image.src="./images/butterfly1_2.png";
+                        // }
+                        // if (RightBtn.clicked()) {
+                        //     move(Player,'right',1);
+                        //     Player.image.src="./images/butterfly1.png";
+                        // }
+                    } 
+                    Player.newPosition();
+                    Player.newShow();
+                    UpBtn.newShow();
+                    DownBtn.newShow();
+                    // LeftBtn.newShow();
+                    // RightBtn.newShow();
+
+                    //敵人
+                    //敵人產生器
+                    GameArea.timer += 1;
+                    if (GameArea.nowscore < 5)
+                    {
+                        if (GameArea.timer == 1 || everytimer(300))
+                        {
+                            x = GameArea.canvas.width;
+                            minHeight = 20;
+                            maxHeight = 230;
+                            height = getRandom(minHeight,maxHeight);
+                            minGap = 50;
+                            maxGap = 200;
+                            gap = getRandom(minGap,maxGap);
+                            imgc = getRandom(1,3);
+                            if (imgc==1)
+                            {
+                                color = "green";
+                            }else if (imgc==2)
+                            {
+                                color = "red";
+                            }else
+                            {
+                                color = "blue";
+                            }
+                            Enemy.push(new object(20, height, color, x, 0));
+                            Enemy.push(new object(20, x - height - gap, color, x, height + gap));
+                        }
+                        for (i = 0; i < Enemy.length; i += 1) 
+                        {
+                            Enemy[i].x += -1;
+                            Enemy[i].newShow();
+                        }
+                    }else if (GameArea.nowscore >= 5 && GameArea.nowscore < 15)
+                    {
+                        if (GameArea.timer == 1 || everytimer(150))
+                        {
+                            x = GameArea.canvas.width;
+                            minHeight = 20;
+                            maxHeight = 200;
+                            height = getRandom(minHeight,maxHeight);
+                            minGap = 150;
+                            maxGap = 200;
+                            gap = getRandom(minGap,maxGap);
+                            imgc = getRandom(1,3);
+                            if (imgc==1)
+                            {
+                                color = "green";
+                            }else if (imgc==2)
+                            {
+                                color = "red";
+                            }else
+                            {
+                                color = "blue";
+                            }
+                            Enemy.push(new object(20, height, color, x, 0));
+                            Enemy.push(new object(20, x - height - gap, color, x, height + gap));
+                        }
+                        for (i = 0; i < Enemy.length; i += 1) 
+                        {
+                            Enemy[i].x += -2;
+                            Enemy[i].newShow();
+                        }
+                    }else if (GameArea.nowscore >= 15 && GameArea.nowscore < 30)
+                    {
+                        if (GameArea.timer == 1 || everytimer(100))
+                        {
+                            x = GameArea.canvas.width;
+                            minHeight = 20;
+                            maxHeight = 200;
+                            height = getRandom(minHeight,maxHeight);
+                            minGap = 150;
+                            maxGap = 200;
+                            gap = getRandom(minGap,maxGap);
+                            imgc = getRandom(1,3);
+                            if (imgc==1)
+                            {
+                                color = "green";
+                            }else if (imgc==2)
+                            {
+                                color = "red";
+                            }else
+                            {
+                                color = "blue";
+                            }
+                            Enemy.push(new object(20, height, color, x, 0));
+                            Enemy.push(new object(20, x - height - gap, color, x, height + gap));
+                        }
+                        for (i = 0; i < Enemy.length; i += 1) 
+                        {
+                            Enemy[i].x += -3;
+                            Enemy[i].newShow();
+                        }
+                    }else if (GameArea.nowscore >= 30 && GameArea.nowscore < 60)
+                    {
+                        if (GameArea.timer == 1 || everytimer(75))
+                        {
+                            x = GameArea.canvas.width;
+                            minHeight = 20;
+                            maxHeight = 200;
+                            height = getRandom(minHeight,maxHeight);
+                            minGap = 150;
+                            maxGap = 200;
+                            gap = getRandom(minGap,maxGap);
+                            imgc = getRandom(1,3);
+                            if (imgc==1)
+                            {
+                                color = "green";
+                            }else if (imgc==2)
+                            {
+                                color = "red";
+                            }else
+                            {
+                                color = "blue";
+                            }
+                            Enemy.push(new object(20, height, color, x, 0));
+                            Enemy.push(new object(20, x - height - gap, color, x, height + gap));
+                        }
+                        for (i = 0; i < Enemy.length; i += 1) 
+                        {
+                            Enemy[i].x += -4;
+                            Enemy[i].newShow();
+                        }
+                    }else if (GameArea.nowscore >= 60 && GameArea.nowscore < 120)
+                    {
+                        if (GameArea.timer == 1 || everytimer(60))
+                        {
+                            x = GameArea.canvas.width;
+                            minHeight = 20;
+                            maxHeight = 200;
+                            height = getRandom(minHeight,maxHeight);
+                            minGap = 150;
+                            maxGap = 200;
+                            gap = getRandom(minGap,maxGap);
+                            imgc = getRandom(1,3);
+                            if (imgc==1)
+                            {
+                                color = "green";
+                            }else if (imgc==2)
+                            {
+                                color = "red";
+                            }else
+                            {
+                                color = "blue";
+                            }
+                            Enemy.push(new object(20, height, color, x, 0));
+                            Enemy.push(new object(20, x - height - gap, color, x, height + gap));
+                        }
+                        for (i = 0; i < Enemy.length; i += 1) 
+                        {
+                            Enemy[i].x += -5;
+                            Enemy[i].newShow();
+                        }
+                    }else if (GameArea.nowscore >= 120 && GameArea.nowscore < 150)
+                    {
+                        if (GameArea.timer == 1 || everytimer(50))
+                        {
+                            x = GameArea.canvas.width;
+                            minHeight = 20;
+                            maxHeight = 200;
+                            height = getRandom(minHeight,maxHeight);
+                            minGap = 150;
+                            maxGap = 200;
+                            gap = getRandom(minGap,maxGap);
+                            imgc = getRandom(1,3);
+                            if (imgc==1)
+                            {
+                                color = "green";
+                            }else if (imgc==2)
+                            {
+                                color = "red";
+                            }else
+                            {
+                                color = "blue";
+                            }
+                            Enemy.push(new object(20, height, color, x, 0));
+                            Enemy.push(new object(20, x - height - gap, color, x, height + gap));
+                        }
+                        for (i = 0; i < Enemy.length; i += 1) 
+                        {
+                            Enemy[i].x += -6;
+                            Enemy[i].newShow();
+                        }
+                    }else if (GameArea.nowscore >= 150 && GameArea.nowscore < 180)
+                    {
+                        if (GameArea.timer == 1 || everytimer(40))
+                        {
+                            x = GameArea.canvas.width;
+                            minHeight = 20;
+                            maxHeight = 200;
+                            height = getRandom(minHeight,maxHeight);
+                            minGap = 150;
+                            maxGap = 200;
+                            gap = getRandom(minGap,maxGap);
+                            imgc = getRandom(1,3);
+                            if (imgc==1)
+                            {
+                                color = "green";
+                            }else if (imgc==2)
+                            {
+                                color = "red";
+                            }else
+                            {
+                                color = "blue";
+                            }
+                            Enemy.push(new object(20, height, color, x, 0));
+                            Enemy.push(new object(20, x - height - gap, color, x, height + gap));
+                        }
+                        for (i = 0; i < Enemy.length; i += 1) 
+                        {
+                            Enemy[i].x += -7;
+                            Enemy[i].newShow();
+                        }
+                    }else if (GameArea.nowscore >= 180 && GameArea.nowscore < 210)
+                    {
+                        if (GameArea.timer == 1 || everytimer(30))
+                        {
+                            x = GameArea.canvas.width;
+                            minHeight = 20;
+                            maxHeight = 200;
+                            height = getRandom(minHeight,maxHeight);
+                            minGap = 150;
+                            maxGap = 200;
+                            gap = getRandom(minGap,maxGap);
+                            imgc = getRandom(1,3);
+                            if (imgc==1)
+                            {
+                                color = "green";
+                            }else if (imgc==2)
+                            {
+                                color = "red";
+                            }else
+                            {
+                                color = "blue";
+                            }
+                            Enemy.push(new object(20, height, color, x, 0));
+                            Enemy.push(new object(20, x - height - gap, color, x, height + gap));
+                        }
+                        for (i = 0; i < Enemy.length; i += 1) 
+                        {
+                            Enemy[i].x += -8;
+                            Enemy[i].newShow();
+                        }
+                    }else if (GameArea.nowscore >= 210)
+                    {
+                        if (GameArea.timer == 1 || everytimer(20))
+                        {
+                            x = GameArea.canvas.width;
+                            minHeight = 20;
+                            maxHeight = 200;
+                            height = getRandom(minHeight,maxHeight);
+                            minGap = 150;
+                            maxGap = 200;
+                            gap = getRandom(minGap,maxGap);
+                            imgc = getRandom(1,3);
+                            if (imgc==1)
+                            {
+                                color = "green";
+                            }else if (imgc==2)
+                            {
+                                color = "red";
+                            }else
+                            {
+                                color = "blue";
+                            }
+                            Enemy.push(new object(20, height, color, x, 0));
+                            Enemy.push(new object(20, x - height - gap, color, x, height + gap));
+                        }
+                        for (i = 0; i < Enemy.length; i += 1) 
+                        {
+                            Enemy[i].x += -9;
+                            Enemy[i].newShow();
+                        }
+                    }
+
+                    //遊戲機制
+                    border();
+                    addscore();
+                    Score.text = "SCORE: " + GameArea.nowscore;
+                    Score.newShow();
+                }
+            }
+            //遊戲機制
+            function border()
+            {
+                if (Player.x <= 0)
+                {
+                    Player.x = 0;
+                }
+                if (Player.x >= GameArea.canvas.width - Player.width)
+                {
+                    GameArea.canvas.width - Player.width;
+                }
+                if (Player.y <= 0)
+                {
+                    Player.y = 0;
+                }
+                if (Player.y > GameArea.canvas.height - Player.height)
+                {
+                    Player.y = GameArea.canvas.height - Player.height;
+                    Player.gravitySpeed = 0;
+                    EndSound.play();
+                    GameArea.stop();
+                    document.getElementById("restart").style.display="";
+                    // Player.bounce = 0.6;
+                    // Player.gravitySpeed = -(Player.gravitySpeed * Player.bounce);
+                }
+                // if (Player.angle > 31)
+                // {
+                //     rotation(Player,0);
+                //     Player.angle = 31;
+                // }else if(Player.angle < 30)
+                // {
+                //     Player.angle = 30;
+                // }else
+                // {
+                //     rotation(Player,0.5);
+                // }
+            }
+            function addscore()
+            {
+                for (i = 0; i < Enemy.length; i += 1) 
+                {
+                    if (Enemy[i].x<=20 && Enemy[i].width != 0 && Enemy[i].height != 0)
+                    {
+                        GameArea.nowscore += 0.5;
+                        Enemy[i].width = 0;
+                        Enemy[i].height = 0;
+                    }
+                }        
+            }
+        </script>
+    </body>
+</html>
