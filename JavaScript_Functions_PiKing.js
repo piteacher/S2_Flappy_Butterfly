@@ -44,7 +44,14 @@ var GameArea =
         ) 
         {
             window.addEventListener('touchstart', function (e) 
+            { 
+                e.preventDefault();
+                GameArea.x = e.pageX;
+                GameArea.y = e.pageY;
+            })
+            window.addEventListener('click', function (e) 
             {
+                e.preventDefault();
                 GameArea.x = e.pageX;
                 GameArea.y = e.pageY;
             })
@@ -52,10 +59,6 @@ var GameArea =
             {
                 GameArea.x = false;
                 GameArea.y = false;
-            })
-            window.addEventListener('click', function (e) {
-                GameArea.x = e.pageX;
-                GameArea.y = e.pageY;
             })
         }
         else
