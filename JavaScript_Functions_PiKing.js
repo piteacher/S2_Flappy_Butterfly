@@ -45,6 +45,10 @@ var GameArea =
             GameArea.x = e.pageX;
             GameArea.y = e.pageY;
         })
+        window.addEventListener('click', function (e) {
+            GameArea.x = e.pageX;
+            GameArea.y = e.pageY;
+        })
         window.addEventListener('touchend', function (e) {
             GameArea.x = false;
             GameArea.y = false;
