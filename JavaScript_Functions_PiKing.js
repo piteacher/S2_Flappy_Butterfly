@@ -45,35 +45,16 @@ var GameArea =
         {
             window.addEventListener('touchstart', e =>
             {
-                if (e.cancelable)
-                {
-                    if(!e.defaultPrevented)
-                    {
-                        e.preventDefault();
-                    }
-                }
-                GameArea.x = e.pageX;
-                GameArea.y = e.pageY;
-            },false);
-
-            // window.addEventListener('click', e => 
-            // {
-            //     e.preventDefault();
-            //     GameArea.x = e.pageX;
-            //     GameArea.y = e.pageY;
-            // })
+                console.log(e.touches[0].pageX);
+                console.log(e.touches[0].pageY);
+                GameArea.x = e.touches[0].pageX;
+                GameArea.y = e.touches[0].pageY;
+            });
             window.addEventListener('touchend', e => 
             { 
-                if (e.cancelable)
-                {
-                    if(!e.defaultPrevented)
-                    {
-                        e.preventDefault();
-                    }
-                }
                 GameArea.x = false;
                 GameArea.y = false;
-            },false);
+            });
         }
         else
         {
