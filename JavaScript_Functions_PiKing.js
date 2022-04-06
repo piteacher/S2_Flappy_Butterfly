@@ -43,17 +43,24 @@ var GameArea =
         || navigator.userAgent.match(/Windows Phone/i)
         ) 
         {
+            
+            window.addEventListener('touchmove', function(e) 
+            {
+
+                e.preventDefault();
+                
+            }, false);
             window.addEventListener('touchstart', e =>
-            { 
-                e.preventDefault()
-                GameArea.x = e.pageX
-                GameArea.y = e.pageY
+            {
+                e.preventDefault();
+                GameArea.x = e.pageX;
+                GameArea.y = e.pageY;
             })
             window.addEventListener('click', e => 
             {
-                e.preventDefault()
-                GameArea.x = e.pageX
-                GameArea.y = e.pageY
+                e.preventDefault();
+                GameArea.x = e.pageX;
+                GameArea.y = e.pageY;
             })
             window.addEventListener('touchend', e => 
             {
