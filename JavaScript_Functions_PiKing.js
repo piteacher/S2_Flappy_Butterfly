@@ -43,18 +43,19 @@ var GameArea =
         || navigator.userAgent.match(/Windows Phone/i)
         ) 
         {
-            
-            window.addEventListener('touchmove', function(e) 
-            {
-
-                e.preventDefault();
-                
-            }, false);
             window.addEventListener('touchstart', e =>
             {
+                if (e.cancelable)
+                {
+                    if(!e.defaultPrevented)
+                    {
+                        e.preventDefault();
+                    }
+                }
                 GameArea.x = e.pageX;
                 GameArea.y = e.pageY;
-            })
+            },false);
+
             // window.addEventListener('click', e => 
             // {
             //     e.preventDefault();
@@ -62,10 +63,17 @@ var GameArea =
             //     GameArea.y = e.pageY;
             // })
             window.addEventListener('touchend', e => 
-            {
+            { 
+                if (e.cancelable)
+                {
+                    if(!e.defaultPrevented)
+                    {
+                        e.preventDefault();
+                    }
+                }
                 GameArea.x = false;
                 GameArea.y = false;
-            })
+            },false);
         }
         else
         {
