@@ -52,16 +52,15 @@ var GameArea =
             }, false);
             window.addEventListener('touchstart', e =>
             {
-                e.preventDefault();
                 GameArea.x = e.pageX;
                 GameArea.y = e.pageY;
             })
-            window.addEventListener('click', e => 
-            {
-                e.preventDefault();
-                GameArea.x = e.pageX;
-                GameArea.y = e.pageY;
-            })
+            // window.addEventListener('click', e => 
+            // {
+            //     e.preventDefault();
+            //     GameArea.x = e.pageX;
+            //     GameArea.y = e.pageY;
+            // })
             window.addEventListener('touchend', e => 
             {
                 GameArea.x = false;
