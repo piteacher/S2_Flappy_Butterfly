@@ -65,6 +65,8 @@ var GameArea =
                 GameArea.x = false;
                 GameArea.y = false;
             })
+            GameArea.x = false;
+            GameArea.y = false;
         }
         else
         {
