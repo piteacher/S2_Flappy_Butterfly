@@ -73,7 +73,7 @@ var GameArea =
                 GameArea.x = false;
                 GameArea.y = false;
             })
-//         }
+        }
     },
     //清除畫布
     clear : function() 
