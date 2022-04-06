@@ -45,16 +45,16 @@ var GameArea =
         {
             window.addEventListener('touchstart', function (e) 
             { 
-//                 e.preventDefault();
+                e.preventDefault();
                 GameArea.x = e.pageX;
                 GameArea.y = e.pageY;
             })
-//             window.addEventListener('click', function (e) 
-//             {
-//                 e.preventDefault();
-//                 GameArea.x = e.pageX;
-//                 GameArea.y = e.pageY;
-//             })
+            window.addEventListener('click', function (e) 
+            {
+                e.preventDefault();
+                GameArea.x = e.pageX;
+                GameArea.y = e.pageY;
+            })
             window.addEventListener('touchend', function (e) 
             {
                 GameArea.x = false;
