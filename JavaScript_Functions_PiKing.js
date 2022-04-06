@@ -34,35 +34,35 @@ var GameArea =
             GameArea.key_is_pressed[e.keyCode] = false;
         })
 
-        if (navigator.userAgent.match(/Android/i)
-        || navigator.userAgent.match(/webOS/i)
-        || navigator.userAgent.match(/iPhone/i)
-        || navigator.userAgent.match(/iPad/i)
-        || navigator.userAgent.match(/iPod/i)
-        || navigator.userAgent.match(/BlackBerry/i)
-        || navigator.userAgent.match(/Windows Phone/i)
-        ) 
-        {
-            window.addEventListener('touchstart', function (e) 
-            { 
-                e.preventDefault();
-                GameArea.x = e.pageX;
-                GameArea.y = e.pageY;
-            })
-            window.addEventListener('click', function (e) 
-            {
-                e.preventDefault();
-                GameArea.x = e.pageX;
-                GameArea.y = e.pageY;
-            })
-            window.addEventListener('touchend', function (e) 
-            {
-                GameArea.x = false;
-                GameArea.y = false;
-            })
-        }
-        else
-        {
+//         if (navigator.userAgent.match(/Android/i)
+//         || navigator.userAgent.match(/webOS/i)
+//         || navigator.userAgent.match(/iPhone/i)
+//         || navigator.userAgent.match(/iPad/i)
+//         || navigator.userAgent.match(/iPod/i)
+//         || navigator.userAgent.match(/BlackBerry/i)
+//         || navigator.userAgent.match(/Windows Phone/i)
+//         ) 
+//         {
+//             window.addEventListener('touchstart', function (e) 
+//             { 
+//                 e.preventDefault();
+//                 GameArea.x = e.pageX;
+//                 GameArea.y = e.pageY;
+//             })
+//             window.addEventListener('click', function (e) 
+//             {
+//                 e.preventDefault();
+//                 GameArea.x = e.pageX;
+//                 GameArea.y = e.pageY;
+//             })
+//             window.addEventListener('touchend', function (e) 
+//             {
+//                 GameArea.x = false;
+//                 GameArea.y = false;
+//             })
+//         }
+//         else
+//         {
             window.addEventListener('mousedown', function (e) 
             {
                 GameArea.x = e.pageX;
@@ -73,7 +73,7 @@ var GameArea =
                 GameArea.x = false;
                 GameArea.y = false;
             })
-        }
+//         }
     },
     //清除畫布
     clear : function() 
