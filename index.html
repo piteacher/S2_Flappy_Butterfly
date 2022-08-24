@@ -11,38 +11,47 @@
     </head>
     <script src="./JavaScript_Functions_PiKing.js"></script>
     <body onload="startGame()">
-        <button id = "next" onclick="next()" style="font-size:20px; font-family:Consolas; position: fixed; top:200px; left:300px;">Next</button>
+        <button id = "next" onclick="next()" style="font-size:20px; font-family:Consolas; position: fixed; top:243px; left:280px;">Next</button>
         <button id = "restart" onclick="refresh()" style="font-size:20px; font-family:Consolas; position: fixed; top:243px; left:280px; display: none;">Restart</button>
         <script>        
             var level = 0;
-            //遊戲空間轉換設定
             function next() 
             {
                 if (level == 0)
                 {
                     level = 1;
                     document.getElementById("next").style.display="none";
+                }else if (level == 1)
+                {
+                    level = 2;
                 }
             }
-            //遊戲初始物品設定
+            //遊戲開始
             function startGame()
             {
+                EndSound = new sound("./sounds/end.wav");
                 GameArea.start(660,280,20);
                 Background = new object(700, 450, "./images/background.png", 0, 0, "background");
-                LobbyText = new object("50px", "Consolas", "black", 100, 100, "text");
+                LobbyText = new object("50px", "Consolas", "black", 100, 50, "text");
                 LobbyImg = new object(400, 210, "./images/Flappy_Butterfly.png", 120, 60, "image");
+                LobbyText2 = new object("40px", "Consolas", "black", 100, 50, "text");
+                LobbyPlayer1 = new object(60, 60, "./images/butterfly1.png", 130, 120, "image");
+                LobbyPlayer2 = new object(60, 60, "./images/butterfly2.png", 270, 120, "image");
+                LobbyPlayer3 = new object(60, 60, "./images/butterfly3.png", 410, 120, "image");
                 Player = new object(30, 30, "./images/butterfly1.png" , 40, 120, "image");
                 Player.gravity = 0.05;
                 Player.gravitySpeed = 0;
+                // Player.angle = 30;
                 UpBtn = new object(50, 50, "./images/upbutton.png", 10, 150, "image");
                 DownBtn = new object(50, 50, "./images/downbutton.png", 10, 230, "image");
+                // LeftBtn = new object(30, 30, "./images/leftbutton.png", 20, 200, "image");
+                // RightBtn = new object(30, 30, "./images/rightbutton.png", 80, 200, "image");
                 GameArea.timer = 0;
                 Enemy = [];
                 Score = new object("30px", "Consolas", "black", 270, 40, "text");
                 GameArea.nowscore = 0;
-                EndSound = new sound("./sounds/end.wav");
             }
-            //遊戲不斷執行設定
+            //遊戲不斷執行
             function LoopGame() 
             {
                 if (level==0)
@@ -54,15 +63,46 @@
                     LobbyText.text = "Flappy Butterfly";
                     LobbyText.newShow();
                     LobbyImg.newShow();
+                    
                 }else if (level==1)
+                {
+                    GameArea.clear();
+                    Background.speedX = -0.5;
+                    Background.newPosition();
+                    Background.newShow();
+                    LobbyText2.text = "Choose one to Start";
+                    LobbyText2.newShow();
+                    LobbyPlayer1.newShow();
+                    LobbyPlayer2.newShow();
+                    LobbyPlayer3.newShow();
+                    if (GameArea.x && GameArea.y) 
+                    {
+                        if (LobbyPlayer1.clicked()) 
+                        {
+                            Player.image.src = "./images/butterfly1.png";
+                            next();
+                        }
+                        else if (LobbyPlayer2.clicked()) 
+                        {
+                            Player.image.src = "./images/butterfly2.png";
+                            next();
+                        }
+                        else if (LobbyPlayer3.clicked()) 
+                        {
+                            Player.image.src= "./images/butterfly3.png";
+                            next();
+                        }
+                    }
+                    
+                }else if (level==2)
                 {
                     //碰撞事件
                     for (i = 0; i < Enemy.length; i += 1) 
                     {
                         if (Player.collision(Enemy[i])) 
                         {
-                            GameArea.stop();
                             EndSound.play();
+                            GameArea.stop();
                             document.getElementById("restart").style.display="";
                             return;
                         } 
@@ -73,10 +113,15 @@
                     Background.speedX = -0.5;
                     Background.newPosition();
                     Background.newShow();
+
                     //玩家
                     //操控事件
+                    // if (GameArea.key_is_pressed && GameArea.key_is_pressed[37]) {move(Player,'left',1);Player.image.src="./images/butterfly1_2.png";}
+                    // if (GameArea.key_is_pressed && GameArea.key_is_pressed[39]) {move(Player,'right',1);Player.image.src="./images/butterfly1.png";}
                     if (GameArea.key_is_pressed && GameArea.key_is_pressed[38]) {move(Player,'up',2);/*rotation(Player,-1)*/}
                     if (GameArea.key_is_pressed && GameArea.key_is_pressed[40]) {move(Player,'down',2);}
+                    // if (GameArea.key_is_pressed && GameArea.key_is_pressed[65]) {move(Player,'left',1);Player.image.src="./images/butterfly1_2.png";}
+                    // if (GameArea.key_is_pressed && GameArea.key_is_pressed[68]) {move(Player,'right',1);Player.image.src="./images/butterfly1.png";}
                     if (GameArea.key_is_pressed && GameArea.key_is_pressed[87]) {move(Player,'up',2);/*rotation(Player,-1)*/}
                     if (GameArea.key_is_pressed && GameArea.key_is_pressed[83]) {move(Player,'down',2);}
                     if (GameArea.x && GameArea.y) 
@@ -84,17 +129,30 @@
                         if (UpBtn.clicked()) 
                         {
                             move(Player,'up',2);
+                            // rotation(Player,-1);
                         }
                         if (DownBtn.clicked()) 
                         {
                             move(Player,'down',2);
                         }
+                        // if (LeftBtn.clicked()) {
+                        //     move(Player,'left',1);
+                        //     Player.image.src="./images/butterfly1_2.png";
+                        // }
+                        // if (RightBtn.clicked()) {
+                        //     move(Player,'right',1);
+                        //     Player.image.src="./images/butterfly1.png";
+                        // }
                     }
                     Player.newPosition();
                     Player.newShow();
                     UpBtn.newShow();
                     DownBtn.newShow();
-                    //產生器
+                    // LeftBtn.newShow();
+                    // RightBtn.newShow();
+
+                    //敵人
+                    //敵人產生器
                     GameArea.timer += 1;
                     if (GameArea.nowscore < 5)
                     {
@@ -367,7 +425,8 @@
                             Enemy[i].newShow();
                         }
                     }
-                    //遊戲機制引用
+
+                    //遊戲機制
                     border();
                     addscore();
                     Score.text = "SCORE: " + GameArea.nowscore;
@@ -377,6 +436,14 @@
             //遊戲機制
             function border()
             {
+                if (Player.x <= 0)
+                {
+                    Player.x = 0;
+                }
+                if (Player.x >= GameArea.canvas.width - Player.width)
+                {
+                    GameArea.canvas.width - Player.width;
+                }
                 if (Player.y <= 0)
                 {
                     Player.y = 0;
@@ -385,10 +452,23 @@
                 {
                     Player.y = GameArea.canvas.height - Player.height;
                     Player.gravitySpeed = 0;
-                    GameArea.stop();
                     EndSound.play();
+                    GameArea.stop();
                     document.getElementById("restart").style.display="";
+                    // Player.bounce = 0.6;
+                    // Player.gravitySpeed = -(Player.gravitySpeed * Player.bounce);
                 }
+                // if (Player.angle > 31)
+                // {
+                //     rotation(Player,0);
+                //     Player.angle = 31;
+                // }else if(Player.angle < 30)
+                // {
+                //     Player.angle = 30;
+                // }else
+                // {
+                //     rotation(Player,0.5);
+                // }
             }
             function addscore()
             {
