@@ -15,6 +15,7 @@
         <button id = "restart" onclick="refresh()" style="font-size:20px; font-family:Consolas; position: fixed; top:243px; left:280px; display: none;">Restart</button>
         <script>        
             var level = 0;
+            var audio = new Audio("sounds/coin04.mp3");
             function next() 
             {
                 if (level == 0)
@@ -476,6 +477,7 @@
                 {
                     if (Enemy[i].x<=20)
                     {
+                        audio.play();
                         GameArea.nowscore += 0.5;
                         Enemy.splice(i, 1);
                     }
