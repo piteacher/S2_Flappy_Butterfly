@@ -33,9 +33,11 @@
                 EndSound = new sound("./sounds/end.wav");
                 GameArea.start(660,280,20);
                 Background = new object(700, 450, "./images/background.png", 0, 0, "background");
-                LobbyText = new object("50px", "Consolas", "black", 100, 50, "text");
+                LobbyText = new object("50px", "Consolas", "black", 330, 50, "text");
+                LobbyText.textAlign = "center";
                 LobbyImg = new object(400, 210, "./images/Flappy_Butterfly.png", 120, 60, "image");
-                LobbyText2 = new object("40px", "Consolas", "black", 100, 50, "text");
+                LobbyText2 = new object("40px", "Consolas", "black", 330, 50, "text");
+                LobbyText2.textAlign = "center";
                 LobbyPlayer1 = new object(60, 60, "./images/butterfly1.png", 130, 120, "image");
                 LobbyPlayer2 = new object(60, 60, "./images/butterfly2.png", 270, 120, "image");
                 LobbyPlayer3 = new object(60, 60, "./images/butterfly3.png", 410, 120, "image");

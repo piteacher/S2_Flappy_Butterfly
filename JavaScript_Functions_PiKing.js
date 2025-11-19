@@ -45,10 +45,13 @@ var GameArea =
         {
             window.addEventListener('touchstart', e =>
             {
-                console.log(e.touches[0].pageX);
-                console.log(e.touches[0].pageY);
-                GameArea.x = e.touches[0].pageX;
-                GameArea.y = e.touches[0].pageY;
+                var rect = GameArea.canvas.getBoundingClientRect();
+                var touchX = e.touches[0].clientX - rect.left;
+                var touchY = e.touches[0].clientY - rect.top;
+                var scaleX = GameArea.canvas.width / rect.width;
+                var scaleY = GameArea.canvas.height / rect.height;
+                GameArea.x = touchX * scaleX;
+                GameArea.y = touchY * scaleY;
             });
             window.addEventListener('touchend', e => 
             { 
@@ -60,8 +63,13 @@ var GameArea =
         {
             window.addEventListener('mousedown', function (e) 
             {
-                GameArea.x = e.pageX;
-                GameArea.y = e.pageY;
+                var rect = GameArea.canvas.getBoundingClientRect();
+                var mouseX = e.clientX - rect.left;
+                var mouseY = e.clientY - rect.top;
+                var scaleX = GameArea.canvas.width / rect.width;
+                var scaleY = GameArea.canvas.height / rect.height;
+                GameArea.x = mouseX * scaleX;
+                GameArea.y = mouseY * scaleY;
             })
             window.addEventListener('mouseup', function (e) 
             {
@@ -122,6 +130,7 @@ function object (width, height, color, x, y, type)
         {
             ctx.font = this.width + " " + this.height;
             ctx.fillStyle = color;
+            ctx.textAlign = this.textAlign || "left";
             ctx.fillText(this.text, this.x, this.y);
         } else if (type == "image")
         {
